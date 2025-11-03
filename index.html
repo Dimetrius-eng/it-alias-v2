@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IT Alias (Українською)</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <meta name="theme-color" content="#007bff">
+    <link rel="manifest" href="manifest.json">
+</head>
+<body>
+    <div class="game-container">
+        
+        <div class="scoreboard" id="scoreboard">
+            <div id="team1-display" class="team-score">
+                <span id="team1-name">Команда 1</span>: <span id="team1-score">0</span>
+            </div>
+            <div id="team2-display" class="team-score">
+                <span id="team2-name">Команда 2</span>: <span id="team2-score">0</span>
+            </div>
+        </div>
+
+        <div id="main-menu-screen" class="screen active">
+            <h1>IT Alias</h1>
+            <div class="menu-buttons">
+                <button id="continue-btn" class="btn-secondary">Продовжити</button>
+                <button id="new-game-menu-btn" class="btn-primary">Нова гра</button>
+                <button id="rules-btn" class="btn-tertiary">Правила</button>
+            </div>
+        </div>
+
+        <div id="rules-screen" class="screen">
+            <h2>Правила гри</h2>
+            <div class="rules-content">
+                <p><strong>Мета:</strong> Пояснити слова своїй команді, не використовуючи самі слова, спільнокореневі слова та переклад.</p>
+                <p><strong>Хід гри:</strong></p>
+                <ul>
+                    <li>Гравець бере телефон і пояснює слова.</li>
+                    <li>Команда вгадує.</li>
+                    <li>За кожне вгадане слово натисніть "Зараховано".</li>
+                    <li>Щоб пропустити складне слово, натисніть "Пропустити".</li>
+                </ul>
+                <p>Перемагає команда, яка першою набере необхідну кількість балів (або більше за всіх після фінального раунді).</p>
+            </div>
+            <button class="btn-primary" data-target="main-menu-screen">Назад</button>
+        </div>
+
+        <div id="settings-screen" class="screen">
+            <h2>Налаштуйте гру</h2>
+            <div class="settings">
+                <input type="text" id="team1-input" placeholder="Назва Команди 1" value="Команда 1">
+                <input type="text" id="team2-input" placeholder="Назва Команди 2" value="Команда 2">
+                
+                <div class="slider-container">
+                    <label for="time-slider">Час раунду: <output id="time-output">60</output> с</label>
+                    <input type="range" id="time-slider" min="10" max="120" step="10" value="60">
+                </div>
+                
+                <div class="slider-container">
+                    <label for="rounds-slider">Кількість раундів: <output id="rounds-output">3</output></label>
+                    <input type="range" id="rounds-slider" min="1" max="5" step="1" value="3">
+                </div>
+
+                <label for="category-select">Складність (словник):</label>
+                <select id="category-select">
+                    <option value="easy">Легкий (новачок)</option>
+                    <option value="medium">Середній (джуніор)</option>
+                    <option value="hard">Складний (сеньйор)</option>
+                    <option value="mixed" selected>Змішаний (всі слова)</option>
+                </select>
+            </div>
+            <button id="start-btn" class="btn-primary">Почати гру</button>
+            <button class="btn-tertiary" data-target="main-menu-screen">Назад</button>
+        </div>
+
+        <div id="game-screen" class="screen">
+            
+            <button id="pause-btn" class="btn-pause">||</button>
+
+            <div class="stats-bar">
+                <div class="stat">
+                    <span>Раунд:</span>
+                    <span id="round-counter">1 / 5</span>
+                </div>
+                <div class="stat">
+                    <span>Час:</span>
+                    <span id="timer">60</span>
+                </div>
+            </div>
+            <div id="word-display">
+                Слово для пояснення
+            </div>
+            <div class="buttons">
+                <button id="skip-btn" class="btn-secondary">Пропустити</button>
+                <button id="correct-btn" class="btn-success">Зараховано</button>
+            </div>
+        </div>
+
+        <div id="turn-end-screen" class="screen">
+            
+            <h2 id="turn-end-title">Час вийшов!</h2>
+            
+            <p id="round-summary"></p>
+            <p class="next-turn-text">Наступний хід: <span id="next-team-name"></span></p>
+            <button id="next-turn-btn" class="btn-primary">Почати раунд</button>
+            <button id="reset-game-btn" class="btn-tertiary">Вийти в меню</button>
+        </div>
+
+        <div id="game-over-screen" class="screen">
+            <h2>Гру завершено!</h2>
+            <p id="winner-message">Перемогла Команда 1!</p>
+            <p id="final-score-summary">Фінальний рахунок: 10 - 5</p>
+            <button id="new-game-btn" class="btn-primary">Нова гра</button>
+        </div>
+        
+        <div id="pause-screen" class="screen">
+            <h2>Пауза</h2>
+            <div class="menu-buttons">
+                <button id="resume-btn" class="btn-primary">Продовжити</button>
+                <button id="quit-to-menu-btn" class="btn-tertiary">Вийти в меню</button>
+            </div>
+        </div>
+
+    </div>
+
+    <script src="script.js"></script>
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('./sw.js')
+                    .then(registration => console.log('Сервіс-воркер успішно зареєстровано!'))
+                    .catch(error => console.log('Помилка реєстрації сервіс-воркера: ', error));
+            });
+        }
+    </script>
+    
+</body>
+</html>
