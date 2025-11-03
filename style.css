@@ -1,0 +1,289 @@
+/* Базові стилі */
+body {
+    font-family: 'Montserrat', sans-serif;
+    background-color: #f4f7f6;
+    color: #333;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 20px;
+    box-sizing: border-box;
+    margin: 0;
+}
+
+.game-container {
+    background-color: #ffffff;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+    width: 100%;
+    max-width: 450px;
+    padding: 28px;
+    text-align: center;
+    overflow: hidden;
+    position: relative; /* Для кнопки паузи */
+}
+
+h1 { color: #0056b3; margin-top: 0; margin-bottom: 10px; }
+h2 { color: #333; margin-bottom: 10px; }
+p { color: #555; line-height: 1.6; }
+
+.screen { display: none; }
+.screen.active { display: block; }
+
+/* --- Табло --- */
+.scoreboard {
+    display: none; 
+    justify-content: space-between;
+    background-color: #f9f9f9;
+    border-radius: 12px;
+    padding: 15px 20px;
+    margin-bottom: 20px;
+}
+.team-score {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #888;
+    transition: all 0.3s ease;
+}
+.team-score.active-team {
+    color: #007bff;
+    transform: scale(1.05);
+}
+.team-score span { font-weight: 700; }
+
+/* --- Налаштування --- */
+.settings {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin: 25px 0;
+}
+.settings input[type="text"] {
+    width: 100%;
+    padding: 14px;
+    font-size: 1rem;
+    font-family: 'Montserrat', sans-serif;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-sizing: border-box; 
+}
+.settings label {
+    font-weight: 600;
+    color: #555;
+    margin-top: 10px;
+    margin-bottom: -5px;
+    text-align: left;
+}
+
+/* --- Ігровий екран --- */
+.stats-bar {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin-bottom: 20px;
+}
+.stat {
+    text-align: center;
+}
+.stat span:first-child {
+    color: #888;
+    font-size: 0.9rem;
+    display: block;
+}
+#timer, #round-counter {
+    font-size: 1.8rem;
+    font-weight: 700;
+}
+#timer { color: #d9534f; }
+#round-counter { color: #555; }
+
+#word-display {
+    font-size: 2rem;
+    font-weight: 600;
+    color: #000;
+    background-color: #f0f8ff; 
+    border: 2px dashed #007bff;
+    border-radius: 12px;
+    padding: 40px 20px;
+    margin-bottom: 25px;
+    min-height: 120px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    word-break: break-word;
+}
+
+/* --- Екран передачі ходу --- */
+.next-turn-text { font-size: 1.2rem; font-weight: 600; margin: 20px 0; }
+#next-team-name { color: #007bff; }
+#round-summary { font-size: 1.1rem; color: #4CAF50; font-weight: 600; }
+
+/* --- Екран завершення гри --- */
+#game-over-screen h2 {
+    color: #007bff;
+    font-size: 1.8rem;
+}
+#winner-message {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin: 20px 0;
+}
+#final-score-summary {
+    font-size: 1.1rem;
+    color: #555;
+    margin-bottom: 30px;
+}
+
+/* --- Загальні стилі кнопок --- */
+button {
+    width: 100%;
+    padding: 16px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    font-family: 'Montserrat', sans-serif;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    margin-top: 10px;
+}
+.buttons { display: flex; gap: 15px; }
+
+.btn-primary { background-color: #007bff; color: white; }
+.btn-primary:hover { background-color: #0056b3; }
+.btn-success { background-color: #28a745; color: white; }
+.btn-success:hover { background-color: #218838; }
+.btn-secondary { background-color: #ffc107; color: #333; }
+.btn-secondary:hover { background-color: #e0a800; }
+.btn-tertiary { background-color: #f0f0f0; color: #555; border: 1px solid #ddd; }
+.btn-tertiary:hover { background-color: #e2e2e2; }
+button:disabled {
+  background-color: #cccccc;
+  color: #888888;
+  cursor: not-allowed;
+}
+
+/* --- Головне меню --- */
+#main-menu-screen h1 {
+  margin-bottom: 30px;
+}
+.menu-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+#main-menu-screen #continue-btn {
+  display: none; /* Сховано за замовчуванням */
+}
+
+/* --- Екран правил --- */
+.rules-content {
+  text-align: left;
+  margin-bottom: 25px;
+}
+.rules-content ul { padding-left: 20px; }
+.rules-content li { margin-bottom: 10px; }
+.rules-content p { margin-bottom: 15px; }
+
+/* --- Випадаючий список (Select) --- */
+.settings select {
+  width: 100%;
+  padding: 14px;
+  font-size: 1rem;
+  font-family: 'Montserrat', sans-serif;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-sizing: border-box;
+  background-color: white;
+}
+
+/* --- Слайдери --- */
+.slider-container {
+  margin-top: 20px;
+}
+.slider-container label {
+  font-weight: 600;
+  color: #555;
+  text-align: left;
+  display: block;
+  margin-bottom: 10px;
+}
+.slider-container output {
+  font-weight: 700;
+  color: #007bff;
+  font-size: 1.1rem;
+}
+
+input[type="range"] {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 8px;
+  background: #ddd;
+  border-radius: 5px;
+  outline: none;
+  opacity: 0.7;
+  -webkit-transition: .2s;
+  transition: opacity .2s;
+  margin-top: 5px;
+}
+input[type="range"]:hover { opacity: 1; }
+
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 24px;
+  height: 24px;
+  background: #007bff;
+  border-radius: 50%;
+  cursor: pointer;
+  border: 2px solid white;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+}
+input[type="range"]::-moz-range-thumb {
+  width: 20px;
+  height: 20px;
+  background: #007bff;
+  border-radius: 50%;
+  cursor: pointer;
+  border: 2px solid white;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+}
+
+/* --- Кнопка Паузи --- */
+.btn-pause {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  width: 44px;
+  height: 44px;
+  font-size: 1.2rem;
+  font-weight: 700;
+  padding: 0;
+  margin: 0;
+  line-height: 44px;
+  text-align: center;
+  background-color: #f0f0f0;
+  color: #555;
+  border: 1px solid #ddd;
+  border-radius: 50%;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+.btn-pause:hover {
+  background-color: #e2e2e2;
+}
+
+/* --- Екран Паузи --- */
+#pause-screen h2 {
+  color: #333;
+  margin-bottom: 25px;
+}
+
+/* --- Для приховування повідомлень --- */
+#turn-end-title,
+#round-summary {
+  display: block; /* За замовчуванням */
+}
