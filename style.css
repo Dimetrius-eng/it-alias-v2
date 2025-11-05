@@ -61,9 +61,8 @@ p { color: #555; line-height: 1.6; }
     gap: 15px;
     margin: 25px 0;
 }
-.settings h2 { 
-    margin-top: 50px; 
-}
+/* (Прибрано margin-top для h2, бо кнопка паузи тепер не заважає) */
+
 .settings input[type="text"] {
     width: 100%;
     padding: 14px;
@@ -125,7 +124,7 @@ p { color: #555; line-height: 1.6; }
 
 /* --- Екран передачі ходу --- */
 #turn-end-screen h2 { 
-    margin-top: 50px; 
+    margin-top: 0; /* (Прибрано margin-top) */
 }
 .next-turn-text { font-size: 1.2rem; font-weight: 600; margin: 20px 0; }
 #next-team-name { color: #007bff; }
@@ -135,7 +134,7 @@ p { color: #555; line-height: 1.6; }
 #game-over-screen h2 {
     color: #007bff;
     font-size: 1.8rem;
-    margin-top: 50px; 
+    margin-top: 0; /* (Прибрано margin-top) */
 }
 #winner-message {
     font-size: 1.5rem;
@@ -180,7 +179,7 @@ button:disabled {
 /* --- Головне меню --- */
 #main-menu-screen h1 {
   margin-bottom: 30px;
-  margin-top: 0; /* (Кнопки звуку тут немає) */
+  margin-top: 0; 
 }
 .menu-buttons {
   display: flex;
@@ -293,18 +292,19 @@ input[type="range"]::-moz-range-thumb {
   background-color: #e2e2e2;
 }
 
-/* --- (Старий .btn-sound видалено) --- */
-
 /* --- Кнопка Звуку (в Налаштуваннях) --- */
 .btn-sound-settings {
-    width: auto; 
-    max-width: 200px; 
-    margin: 15px auto 0; 
-    padding: 12px 20px;
-    font-size: 1.5rem; 
+    width: 100%; 
+    padding: 14px;
+    font-size: 1rem; 
+    font-family: 'Montserrat', sans-serif;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-sizing: border-box;
     background-color: #f0f0f0;
     color: #555;
-    border: 1px solid #ddd;
+    text-align: left; 
+    margin-top: 10px; 
 }
 .btn-sound-settings:hover {
   background-color: #e2e2e2;
