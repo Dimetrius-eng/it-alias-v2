@@ -21,7 +21,7 @@ body {
     padding: 28px;
     text-align: center;
     overflow: hidden;
-    position: relative; /* Для кнопки паузи */
+    position: relative; /* Критично важливо для позиціонування кнопок */
 }
 
 h1 { color: #0056b3; margin-top: 0; margin-bottom: 10px; }
@@ -84,6 +84,8 @@ p { color: #555; line-height: 1.6; }
     font-size: 1.2rem;
     font-weight: 600;
     margin-bottom: 20px;
+    /* Додаємо відступ зверху, щоб кнопки не налаzили */
+    margin-top: 30px; 
 }
 .stat {
     text-align: center;
@@ -101,7 +103,7 @@ p { color: #555; line-height: 1.6; }
 #round-counter { color: #555; }
 
 #word-display {
-    font-size: 2rem;
+    font-size: 2rem; /* Це наш базовий розмір */
     font-weight: 600;
     color: #000;
     background-color: #f0f8ff; 
@@ -113,7 +115,13 @@ p { color: #555; line-height: 1.6; }
     display: flex;
     justify-content: center;
     align-items: center;
-    word-break: break-word;
+    
+    /* ЗМІНА ТУТ: Додаємо правила переносів */
+    word-wrap: break-word; /* Старий, але надійний */
+    overflow-wrap: break-word; /* Новий стандарт */
+    -webkit-hyphens: auto; /* Дозволяє переноси (не завжди спрацює) */
+    -ms-hyphens: auto;
+    hyphens: auto;
 }
 
 /* --- Екран передачі ходу --- */
@@ -176,7 +184,7 @@ button:disabled {
   gap: 15px;
 }
 #main-menu-screen #continue-btn {
-  display: none; /* Сховано за замовчуванням */
+  display: none; 
 }
 
 /* --- Екран правил --- */
@@ -253,11 +261,12 @@ input[type="range"]::-moz-range-thumb {
   box-shadow: 0 1px 3px rgba(0,0,0,0.2);
 }
 
-/* --- Кнопка Паузи --- */
+/* --- ЗМІНА ТУТ: Кнопка Паузи --- */
 .btn-pause {
   position: absolute;
   top: 15px;
-  right: 15px;
+  left: 50%; /* Центруємо по горизонталі */
+  transform: translateX(-50%); /* Точне центрування */
   width: 44px;
   height: 44px;
   font-size: 1.2rem;
@@ -269,30 +278,19 @@ input[type="range"]::-moz-range-thumb {
   background-color: #f0f0f0;
   color: #555;
   border: 1px solid #ddd;
-  border-radius: 50%;
+  border-radius: 50%; 
   box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  display: none; /* Сховано за замовчуванням */
 }
 .btn-pause:hover {
   background-color: #e2e2e2;
 }
 
-/* --- Екран Паузи --- */
-#pause-screen h2 {
-  color: #333;
-  margin-bottom: 25px;
-}
-
-/* --- Для приховування повідомлень --- */
-#turn-end-title,
-#round-summary {
-  display: block; /* За замовчуванням */
-}
-
-/* --- НОВІ СТИЛІ: Кнопка Звуку --- */
+/* --- ЗМІНА ТУТ: Кнопка Звуку --- */
 .btn-sound {
   position: absolute;
   top: 15px;
-  left: 15px; /* Розміщуємо її зліва (кнопка паузи у нас справа) */
+  left: 15px; /* Залишаємо зліва, де не заважає */
   width: 44px;
   height: 44px;
   font-size: 1.2rem;
@@ -303,9 +301,22 @@ input[type="range"]::-moz-range-thumb {
   background-color: #f0f0f0;
   color: #555;
   border: 1px solid #ddd;
-  border-radius: 50%; /* Робимо круглою */
+  border-radius: 50%;
   box-shadow: 0 1px 3px rgba(0,0,0,0.1);
 }
 .btn-sound:hover {
   background-color: #e2e2e2;
+}
+
+
+/* --- Екран Паузи --- */
+#pause-screen h2 {
+  color: #333;
+  margin-bottom: 25px;
+}
+
+/* --- Для приховування повідомлень --- */
+#turn-end-title,
+#round-summary {
+  display: block; 
 }
