@@ -1,5 +1,5 @@
 // --- Глобальні змінні ---
-let allWordsByCategory = {};  
+let allWordsByCategory = {}; 
 let availableWords = []; 
 let isSoundEnabled = true; 
 const SOUND_STORAGE_KEY = 'itAliasSound'; 
@@ -28,7 +28,6 @@ const mainMenuScreen = document.getElementById('main-menu-screen');
 const settingsScreen = document.getElementById('settings-screen'); 
 const rulesScreen = document.getElementById('rules-screen');     
 const gameScreen = document.getElementById('game-screen');
-const lastWordScreen = document.getElementById('last-word-screen'); 
 const turnEndScreen = document.getElementById('turn-end-screen');
 const gameOverScreen = document.getElementById('game-over-screen');
 const pauseScreen = document.getElementById('pause-screen'); 
@@ -66,9 +65,6 @@ const roundSummaryDisplay = document.getElementById('round-summary');
 const nextTeamNameDisplay = document.getElementById('next-team-name');
 const winnerMessageDisplay = document.getElementById('winner-message'); 
 const finalScoreSummaryDisplay = document.getElementById('final-score-summary');
-const lastWordDisplay = document.getElementById('last-word-display'); 
-const lastWordCorrectBtn = document.getElementById('last-word-correct-btn'); 
-const lastWordSkipBtn = document.getElementById('last-word-skip-btn'); 
 
 // --- Прив'язуємо функції до кнопок ---
 newGameMenuBtn.addEventListener('click', () => {
@@ -109,9 +105,6 @@ quitToMenuBtn.addEventListener('click', quitGame);
 soundToggleBtn.addEventListener('click', toggleSound); 
 timeSlider.oninput = function() { timeOutput.value = this.value; }
 roundsSlider.oninput = function() { roundsOutput.value = this.value; }
-lastWordCorrectBtn.addEventListener('click', handleLastWordCorrect);
-lastWordSkipBtn.addEventListener('click', handleLastWordSkip);
-
 
 // --- Робота зі сховищем (localStorage) ---
 const GAME_STORAGE_KEY = 'itAliasSavedGame'; 
@@ -204,51 +197,23 @@ async function initializeApp() {
     continueBtn.disabled = false;
   }
   
-  pauseBtn.style.display = 'none'; 
+  pauseBtn.style.display = 'none'; // Кнопка паузи схована
   
-  showScreen(mainMenuScreen, true); // Запуск без анімації
+  showScreen(mainMenuScreen); 
   scoreboard.style.display = 'none';
 }
 
 // --- Функції гри ---
-let currentActiveScreen = mainMenuScreen; 
-let isAnimating = false; 
-
-function showScreen(screenToShow, instant = false) {
-  if (isAnimating) return;
-
-  if (instant) {
-    if (currentActiveScreen) {
-        currentActiveScreen.classList.remove('active');
-    }
-    screenToShow.classList.add('active');
-    currentActiveScreen = screenToShow;
-    return;
-  }
-
-  isAnimating = true;
-
-  if (currentActiveScreen) {
-      currentActiveScreen.classList.add('fade-out');
-  }
-
-  screenToShow.classList.add('active', 'scan-in');
-
+function showScreen(screenToShow) {
+  screens.forEach(screen => screen.classList.remove('active'));
+  screenToShow.classList.add('active');
+  
+  // Керуємо ТІЛЬКИ кнопкою паузи
   if (screenToShow === gameScreen) {
     pauseBtn.style.display = 'block';
   } else {
     pauseBtn.style.display = 'none';
   }
-
-  setTimeout(() => {
-    if (currentActiveScreen) {
-        currentActiveScreen.classList.remove('active', 'fade-out');
-    }
-    screenToShow.classList.remove('scan-in');
-    
-    currentActiveScreen = screenToShow;
-    isAnimating = false;
-  }, 400); 
 }
 
 function getWordsForCategory(category) {
@@ -374,34 +339,16 @@ function handleSkip() {
   playSound(sounds.skip); 
   nextWord();
 }
-
 function endRound() {
   clearInterval(timerInterval); 
   gameState.isRoundActive = false; 
   stopSound(sounds.tick); 
   playSound(sounds.timesUp); 
   
-  lastWordDisplay.innerHTML = wordDisplay.innerHTML;
-  lastWordDisplay.style.fontSize = wordDisplay.style.fontSize;
-  
-  showScreen(lastWordScreen);
-}
-
-function handleLastWordCorrect() {
-  roundScore++; 
-  finishRoundLogic(); 
-}
-
-function handleLastWordSkip() {
-  finishRoundLogic(); 
-}
-
-function finishRoundLogic() {
   if (gameState.currentTeam === 1) gameState.team1Score += roundScore;
   else gameState.team2Score += roundScore;
   gameState.lastRoundScore = roundScore; 
   updateScoreboard();
-
   if (gameState.currentTeam === 2 && gameState.currentRound >= gameState.totalRounds) {
     gameState.isGameInProgress = false; 
     showWinner();
@@ -412,7 +359,6 @@ function finishRoundLogic() {
     saveGameState(); 
   }
 }
-
 function showRoundSummary(isContinuation = false) {
   if (isContinuation) {
     turnEndTitle.style.display = 'none';
