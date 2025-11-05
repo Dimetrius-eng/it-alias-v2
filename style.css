@@ -169,6 +169,7 @@ p { color: #555; line-height: 1.6; }
     overflow-wrap: break-word;
     position: relative; 
     z-index: 5;
+    /* --- ВИПРАВЛЕННЯ ТУТ: Дефіси видалено --- */
 }
 
 /* --- Екран "Останнє слово" --- */
