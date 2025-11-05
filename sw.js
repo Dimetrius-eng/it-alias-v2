@@ -1,5 +1,5 @@
-// ВЕРСІЯ 21 - Виправлення багу зі звуком тікання
-const CACHE_NAME = 'it-alias-v21-tick-sound-fix';
+// ВЕРСІЯ 22 - Виправлення логіки кнопки звуку
+const CACHE_NAME = 'it-alias-v22-sound-toggle-fix';
 
 const urlsToCache = [
   './',
@@ -22,7 +22,7 @@ self.addEventListener('install', event => {
   event.waitUntil(
     caches.open(CACHE_NAME)
       .then(cache => {
-        console.log('Відкрито кеш v21');
+        console.log('Відкрито кеш v22');
         const localUrls = urlsToCache.filter(url => !url.startsWith('http'));
         const externalUrls = urlsToCache.filter(url => url.startsWith('http'));
         
@@ -32,7 +32,7 @@ self.addEventListener('install', event => {
             return Promise.all(externalRequests.map(req => cache.add(req)));
           });
       })
-      .catch(err => console.error('Помилка cache.addAll у v21:', err))
+      .catch(err => console.error('Помилка cache.addAll у v22:', err))
   );
 });
 
@@ -48,7 +48,7 @@ self.addEventListener('fetch', event => {
 
 // 3. Подія "activate" (оновлюємо "білий список")
 self.addEventListener('activate', event => {
-  const cacheWhitelist = [CACHE_NAME]; // Залишити тільки v21
+  const cacheWhitelist = [CACHE_NAME]; // Залишити тільки v22
   event.waitUntil(
     caches.keys().then(cacheNames => {
       return Promise.all(
@@ -61,7 +61,7 @@ self.addEventListener('activate', event => {
       );
     })
     .then(() => {
-        console.log('Service Worker v21 активовано і перехоплює контроль!');
+        console.log('Service Worker v22 активовано і перехоплює контроль!');
         return self.clients.claim();
     })
   );
