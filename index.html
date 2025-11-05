@@ -12,7 +12,6 @@
 <body>
     <div class="game-container">
         
-        <button id="sound-toggle-btn" class="btn-sound">🔊</button>
         <button id="pause-btn" class="btn-pause">||</button>
 
         <div class="scoreboard" id="scoreboard">
@@ -52,8 +51,8 @@
         <div id="settings-screen" class="screen">
             <h2>Налаштуйте гру</h2>
             <div class="settings">
-                <input type="text" id="team1-input" placeholder="Назва Команди 1" value="Команда 1">
-                <input type="text" id="team2-input" placeholder="Назва Команди 2" value="Команда 2">
+                <input type="text" id="team1-input" placeholder="Назва Команди 1" value="Команда 1" maxlength="9">
+                <input type="text" id="team2-input" placeholder="Назва Команди 2" value="Команда 2" maxlength="9">
                 
                 <div class="slider-container">
                     <label for="time-slider">Час раунду: <output id="time-output">60</output> с</label>
@@ -72,6 +71,8 @@
                     <option value="hard">Складний (сеньйор)</option>
                     <option value="mixed" selected>Змішаний (всі слова)</option>
                 </select>
+
+                <button id="sound-toggle-btn" class="btn-sound-settings">🔊</button>
             </div>
             <button id="start-btn" class="btn-primary">Почати гру</button>
             <button class="btn-tertiary" data-target="main-menu-screen">Назад</button>
