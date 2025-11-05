@@ -21,7 +21,10 @@ body {
     padding: 28px;
     text-align: center;
     overflow: hidden;
-    position: relative; /* Критично важливо для позиціонування кнопок */
+    position: relative; 
+    
+    /* ЗМІНА ТУТ: Відступ зверху, щоб не налазити на кнопки */
+    margin-top: 60px; 
 }
 
 h1 { color: #0056b3; margin-top: 0; margin-bottom: 10px; }
@@ -84,8 +87,7 @@ p { color: #555; line-height: 1.6; }
     font-size: 1.2rem;
     font-weight: 600;
     margin-bottom: 20px;
-    /* Додаємо відступ зверху, щоб кнопки не налаzили */
-    margin-top: 30px; 
+    /* (Забираємо margin-top, він тепер не потрібен) */
 }
 .stat {
     text-align: center;
@@ -103,7 +105,7 @@ p { color: #555; line-height: 1.6; }
 #round-counter { color: #555; }
 
 #word-display {
-    font-size: 2rem; /* Це наш базовий розмір */
+    font-size: 2rem; 
     font-weight: 600;
     color: #000;
     background-color: #f0f8ff; 
@@ -237,7 +239,6 @@ input[type="range"] {
   margin-top: 5px;
 }
 input[type="range"]:hover { opacity: 1; }
-
 input[type="range"]::-webkit-slider-thumb {
   -webkit-appearance: none;
   appearance: none;
@@ -259,9 +260,9 @@ input[type="range"]::-moz-range-thumb {
   box-shadow: 0 1px 3px rgba(0,0,0,0.2);
 }
 
-/* --- Кнопка Паузи --- */
+/* --- ЗМІНА ТУТ: Кнопка Паузи --- */
 .btn-pause {
-  position: absolute;
+  position: fixed; /* Прив'язка до екрану */
   top: 15px;
   left: 50%; /* Центруємо по горизонталі */
   transform: translateX(-50%); /* Точне центрування */
@@ -279,16 +280,17 @@ input[type="range"]::-moz-range-thumb {
   border-radius: 50%; 
   box-shadow: 0 1px 3px rgba(0,0,0,0.1);
   display: none; /* Сховано за замовчуванням */
+  z-index: 10; /* Переконатися, що вона зверху */
 }
 .btn-pause:hover {
   background-color: #e2e2e2;
 }
 
-/* --- Кнопка Звуку --- */
+/* --- ЗМІНА ТУТ: Кнопка Звуку --- */
 .btn-sound {
-  position: absolute;
+  position: fixed; /* Прив'язка до екрану */
   top: 15px;
-  left: 15px; /* Залишаємо зліва, де не заважає */
+  left: 15px; 
   width: 44px;
   height: 44px;
   font-size: 1.2rem;
@@ -301,6 +303,7 @@ input[type="range"]::-moz-range-thumb {
   border: 1px solid #ddd;
   border-radius: 50%;
   box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  z-index: 10; /* Переконатися, що вона зверху */
 }
 .btn-sound:hover {
   background-color: #e2e2e2;
