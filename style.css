@@ -255,7 +255,7 @@ button:disabled {
 /* --- Головне меню --- */
 #main-menu-screen h1 {
   margin-bottom: 30px;
-  margin-top: 50px; /* (Відступ для кнопок, які тут не видно, але на інших екранах - так) */
+  margin-top: 50px; 
 }
 .menu-buttons {
   display: flex;
