@@ -115,11 +115,9 @@ p { color: #555; line-height: 1.6; }
     display: flex;
     justify-content: center;
     align-items: center;
-    
-    /* ЗМІНА ТУТ: Додаємо правила переносів */
-    word-wrap: break-word; /* Старий, але надійний */
-    overflow-wrap: break-word; /* Новий стандарт */
-    -webkit-hyphens: auto; /* Дозволяє переноси (не завжди спрацює) */
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    -webkit-hyphens: auto;
     -ms-hyphens: auto;
     hyphens: auto;
 }
@@ -261,7 +259,7 @@ input[type="range"]::-moz-range-thumb {
   box-shadow: 0 1px 3px rgba(0,0,0,0.2);
 }
 
-/* --- ЗМІНА ТУТ: Кнопка Паузи --- */
+/* --- Кнопка Паузи --- */
 .btn-pause {
   position: absolute;
   top: 15px;
@@ -286,7 +284,7 @@ input[type="range"]::-moz-range-thumb {
   background-color: #e2e2e2;
 }
 
-/* --- ЗМІНА ТУТ: Кнопка Звуку --- */
+/* --- Кнопка Звуку --- */
 .btn-sound {
   position: absolute;
   top: 15px;
@@ -307,7 +305,6 @@ input[type="range"]::-moz-range-thumb {
 .btn-sound:hover {
   background-color: #e2e2e2;
 }
-
 
 /* --- Екран Паузи --- */
 #pause-screen h2 {
