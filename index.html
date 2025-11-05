@@ -10,9 +10,11 @@
     <link rel="manifest" href="manifest.json">
 </head>
 <body>
+
+    <button id="sound-toggle-btn" class="btn-sound">🔊</button>
+    <button id="pause-btn" class="btn-pause">||</button>
+
     <div class="game-container">
-        
-        <button id="sound-toggle-btn" class="btn-sound">🔊</button>
         
         <div class="scoreboard" id="scoreboard">
             <div id="team1-display" class="team-score">
@@ -43,7 +45,7 @@
                     <li>За кожне вгадане слово натисніть "Зараховано".</li>
                     <li>Щоб пропустити складне слово, натисніть "Пропустити".</li>
                 </ul>
-                <p>Перемагає команда, яка першою набере необхідну кількість балів (або більше за всіх після фінального раунду).</p>
+                <p>Перемагає команда, яка першою набере необхідну кількість балів (або більше за всіх після фінального раунді).</p>
             </div>
             <button class="btn-primary" data-target="main-menu-screen">Назад</button>
         </div>
@@ -78,8 +80,6 @@
 
         <div id="game-screen" class="screen">
             
-            <button id="pause-btn" class="btn-pause">||</button>
-
             <div class="stats-bar">
                 <div class="stat">
                     <span>Раунд:</span>
@@ -100,9 +100,7 @@
         </div>
 
         <div id="turn-end-screen" class="screen">
-            
             <h2 id="turn-end-title">Час вийшов!</h2>
-            
             <p id="round-summary"></p>
             <p class="next-turn-text">Наступний хід: <span id="next-team-name"></span></p>
             <button id="next-turn-btn" class="btn-primary">Почати раунд</button>
