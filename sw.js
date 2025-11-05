@@ -1,5 +1,5 @@
-// ВЕРСІЯ 29 - Кнопка звуку в Налаштуваннях + maxlength
-const CACHE_NAME = 'it-alias-v29-sound-in-settings';
+// ВЕРСІЯ 30 - Виправлення UI звуку + maxlength
+const CACHE_NAME = 'it-alias-v30-sound-ui-maxlength';
 
 const urlsToCache = [
   './',
@@ -22,7 +22,7 @@ self.addEventListener('install', event => {
   event.waitUntil(
     caches.open(CACHE_NAME)
       .then(cache => {
-        console.log('Відкрито кеш v29');
+        console.log('Відкрито кеш v30');
         const localUrls = urlsToCache.filter(url => !url.startsWith('http'));
         const externalUrls = urlsToCache.filter(url => url.startsWith('http'));
         
@@ -32,7 +32,7 @@ self.addEventListener('install', event => {
             return Promise.all(externalRequests.map(req => cache.add(req)));
           });
       })
-      .catch(err => console.error('Помилка cache.addAll у v29:', err))
+      .catch(err => console.error('Помилка cache.addAll у v30:', err))
   );
 });
 
@@ -48,7 +48,7 @@ self.addEventListener('fetch', event => {
 
 // 3. Подія "activate" (оновлюємо "білий список")
 self.addEventListener('activate', event => {
-  const cacheWhitelist = [CACHE_NAME]; // Залишити тільки v29
+  const cacheWhitelist = [CACHE_NAME]; // Залишити тільки v30
   event.waitUntil(
     caches.keys().then(cacheNames => {
       return Promise.all(
@@ -61,7 +61,7 @@ self.addEventListener('activate', event => {
       );
     })
     .then(() => {
-        console.log('Service Worker v29 активовано і перехоплює контроль!');
+        console.log('Service Worker v30 активовано і перехоплює контроль!');
         return self.clients.claim();
     })
   );
