@@ -22,7 +22,7 @@ body {
     text-align: center;
     overflow: hidden;
     position: relative; /* Критично важливо */
-    margin-top: 0; /* Прибираємо старий відступ */
+    margin-top: 0; 
 }
 
 h1 { color: #0056b3; margin-top: 0; margin-bottom: 10px; }
@@ -40,6 +40,7 @@ p { color: #555; line-height: 1.6; }
     border-radius: 12px;
     padding: 15px 20px;
     margin-bottom: 20px;
+    margin-top: 50px; /* Відступ від кнопок */
 }
 .team-score {
     font-size: 1.1rem;
@@ -59,6 +60,9 @@ p { color: #555; line-height: 1.6; }
     flex-direction: column;
     gap: 15px;
     margin: 25px 0;
+}
+.settings h2 { /* Відступ для кнопок */
+    margin-top: 50px; 
 }
 .settings input[type="text"] {
     width: 100%;
@@ -85,8 +89,7 @@ p { color: #555; line-height: 1.6; }
     font-size: 1.2rem;
     font-weight: 600;
     margin-bottom: 20px;
-    /* ЗНОВУ ДОДАЄМО ВІДСТУП, щоб не налазити на кнопки */
-    margin-top: 30px; 
+    margin-top: 30px; /* Відступ від кнопок */
 }
 .stat {
     text-align: center;
@@ -124,6 +127,9 @@ p { color: #555; line-height: 1.6; }
 }
 
 /* --- Екран передачі ходу --- */
+#turn-end-screen h2 { /* Відступ для кнопок */
+    margin-top: 50px; 
+}
 .next-turn-text { font-size: 1.2rem; font-weight: 600; margin: 20px 0; }
 #next-team-name { color: #007bff; }
 #round-summary { font-size: 1.1rem; color: #4CAF50; font-weight: 600; }
@@ -132,6 +138,7 @@ p { color: #555; line-height: 1.6; }
 #game-over-screen h2 {
     color: #007bff;
     font-size: 1.8rem;
+    margin-top: 50px; /* Відступ для кнопок */
 }
 #winner-message {
     font-size: 1.5rem;
@@ -176,6 +183,7 @@ button:disabled {
 /* --- Головне меню --- */
 #main-menu-screen h1 {
   margin-bottom: 30px;
+  margin-top: 50px; /* Відступ для кнопок */
 }
 .menu-buttons {
   display: flex;
@@ -187,6 +195,9 @@ button:disabled {
 }
 
 /* --- Екран правил --- */
+#rules-screen h2 { /* Відступ для кнопок */
+    margin-top: 50px; 
+}
 .rules-content {
   text-align: left;
   margin-bottom: 25px;
@@ -259,12 +270,12 @@ input[type="range"]::-moz-range-thumb {
   box-shadow: 0 1px 3px rgba(0,0,0,0.2);
 }
 
-/* --- ЗМІНА ТУТ: Кнопка Паузи --- */
+/* --- Кнопка Паузи --- */
 .btn-pause {
-  position: absolute; /* Прив'язка до .game-container */
+  position: absolute; 
   top: 15px;
-  left: 50%; /* Центруємо по горизонталі */
-  transform: translateX(-50%); /* Точне центрування */
+  left: 50%; 
+  transform: translateX(-50%); 
   width: 44px;
   height: 44px;
   font-size: 1.2rem;
@@ -285,9 +296,9 @@ input[type="range"]::-moz-range-thumb {
   background-color: #e2e2e2;
 }
 
-/* --- ЗМІНА ТУТ: Кнопка Звуку --- */
+/* --- Кнопка Звуку --- */
 .btn-sound {
-  position: absolute; /* Прив'язка до .game-container */
+  position: absolute; 
   top: 15px;
   left: 15px; 
   width: 44px;
@@ -303,6 +314,7 @@ input[type="range"]::-moz-range-thumb {
   border-radius: 50%;
   box-shadow: 0 1px 3px rgba(0,0,0,0.1);
   z-index: 10; 
+  display: none; /* За замовчуванням сховано */
 }
 .btn-sound:hover {
   background-color: #e2e2e2;
@@ -312,6 +324,7 @@ input[type="range"]::-moz-range-thumb {
 #pause-screen h2 {
   color: #333;
   margin-bottom: 25px;
+  margin-top: 50px; /* Відступ для кнопок */
 }
 
 /* --- Для приховування повідомлень --- */
