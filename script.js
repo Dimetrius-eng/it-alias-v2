@@ -28,6 +28,7 @@ const mainMenuScreen = document.getElementById('main-menu-screen');
 const settingsScreen = document.getElementById('settings-screen'); 
 const rulesScreen = document.getElementById('rules-screen');     
 const gameScreen = document.getElementById('game-screen');
+const lastWordScreen = document.getElementById('last-word-screen'); // НОВИЙ
 const turnEndScreen = document.getElementById('turn-end-screen');
 const gameOverScreen = document.getElementById('game-over-screen');
 const pauseScreen = document.getElementById('pause-screen'); 
@@ -65,6 +66,9 @@ const roundSummaryDisplay = document.getElementById('round-summary');
 const nextTeamNameDisplay = document.getElementById('next-team-name');
 const winnerMessageDisplay = document.getElementById('winner-message'); 
 const finalScoreSummaryDisplay = document.getElementById('final-score-summary');
+const lastWordDisplay = document.getElementById('last-word-display'); // НОВИЙ
+const lastWordCorrectBtn = document.getElementById('last-word-correct-btn'); // НОВИЙ
+const lastWordSkipBtn = document.getElementById('last-word-skip-btn'); // НОВИЙ
 
 // --- Прив'язуємо функції до кнопок ---
 newGameMenuBtn.addEventListener('click', () => {
@@ -105,6 +109,9 @@ quitToMenuBtn.addEventListener('click', quitGame);
 soundToggleBtn.addEventListener('click', toggleSound); 
 timeSlider.oninput = function() { timeOutput.value = this.value; }
 roundsSlider.oninput = function() { roundsOutput.value = this.value; }
+lastWordCorrectBtn.addEventListener('click', handleLastWordCorrect); // НОВИЙ
+lastWordSkipBtn.addEventListener('click', handleLastWordSkip); // НОВИЙ
+
 
 // --- Робота зі сховищем (localStorage) ---
 const GAME_STORAGE_KEY = 'itAliasSavedGame'; 
@@ -240,15 +247,9 @@ function setupNewGame() {
   scoreboard.style.display = 'flex'; 
   startRound();
 }
-
-// ЗМІНА ТУТ
 function continueGame() {
-  // Нам не потрібно завантажувати стан, initializeApp() вже це зробив.
-  
   updateScoreboard();
   scoreboard.style.display = 'flex';
-  
-  // Оновлюємо налаштування (про всяк випадок)
   team1Input.value = gameState.team1Name;
   team2Input.value = gameState.team2Name;
   timeSlider.value = gameState.roundTime;
@@ -256,19 +257,12 @@ function continueGame() {
   roundsSlider.value = gameState.totalRounds;
   roundsOutput.value = gameState.totalRounds;
   categorySelect.value = gameState.selectedCategory; 
-  
-  // Вирішуємо, куди йти
   if (gameState.isRoundActive) {
-    // Якщо гравець оновив сторінку ПОСЕРЕД раунду,
-    // ми починаємо раунд заново (але не збільшуємо лічильник)
-    startRound(true); // true = це продовження
+    startRound(true); 
   } else {
-    // Якщо гравець вийшов МІЖ раундами (на екрані "Час вийшов!"),
-    // ми показуємо йому цей екран, але без напису "Ви заробили 0 балів"
-    showRoundSummary(true); // true = це продовження
+    showRoundSummary(true); 
   }
 }
-
 function startRound(isContinuation = false) {
   roundScore = 0; 
   timeLeft = gameState.roundTime;
@@ -353,17 +347,39 @@ function handleSkip() {
   nextWord();
 }
 
-// (Ми повертаємось до версії v30, тому "Останнього слова" НЕМАЄ)
+// ЗМІНА ТУТ: endRound() тепер переходить на "Останнє слово"
 function endRound() {
   clearInterval(timerInterval); 
   gameState.isRoundActive = false; 
   stopSound(sounds.tick); 
   playSound(sounds.timesUp); 
   
+  // Копіюємо слово на новий екран
+  lastWordDisplay.innerHTML = wordDisplay.innerHTML;
+  lastWordDisplay.style.fontSize = wordDisplay.style.fontSize;
+  
+  // Показуємо новий екран
+  showScreen(lastWordScreen);
+}
+
+// НОВА ФУНКЦІЯ
+function handleLastWordCorrect() {
+  roundScore++; 
+  finishRoundLogic(); 
+}
+
+// НОВА ФУНКЦІЯ
+function handleLastWordSkip() {
+  finishRoundLogic(); 
+}
+
+// НОВА ФУНКЦІЯ (містить логіку зі старої endRound)
+function finishRoundLogic() {
   if (gameState.currentTeam === 1) gameState.team1Score += roundScore;
   else gameState.team2Score += roundScore;
   gameState.lastRoundScore = roundScore; 
   updateScoreboard();
+
   if (gameState.currentTeam === 2 && gameState.currentRound >= gameState.totalRounds) {
     gameState.isGameInProgress = false; 
     showWinner();
@@ -431,37 +447,17 @@ function resumeGame() {
   showScreen(gameScreen); 
   startTimer(); 
 }
-
-// ЗМІНА ТУТ: Повністю нова, виправлена логіка
 function quitGame() {
   if (!confirm("Вийти в головне меню? Ваш прогрес буде збережено.")) {
       return; 
   }
-  
-  // 1. Зупиняємо все, що пов'язано з раундом
   clearInterval(timerInterval); 
   stopSound(sounds.tick); 
   
-  // 2. Позначаємо, що ми БІЛЬШЕ НЕ в активному раунді
   gameState.isRoundActive = false; 
-  
-  // 3. Зберігаємо цей стан
   saveGameState(); 
-  
-  // 4. Ховаємо табло
   scoreboard.style.display = 'none'; 
-  
-  // 5. Просто показуємо головне меню. НЕ викликаємо initializeApp()
-  showScreen(mainMenuScreen);
-  
-  // 6. Оновлюємо кнопку "Продовжити" вручну
-  // (Оскільки initializeApp не викликається, нам треба зробити це самим)
-  if (loadGameState() && gameState.isGameInProgress) {
-    continueBtn.style.display = 'block';
-    continueBtn.disabled = false;
-  } else {
-    continueBtn.style.display = 'none';
-  }
+  initializeApp(); 
 }
 
 // --- ЗАПУСК ДОДАТКУ ---
