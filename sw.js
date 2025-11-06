@@ -1,6 +1,6 @@
 // ВЕРСІЯ 37 - Виправлення багу "Продовжити" + "Розблокування" аудіо
 const CACHE_NAME = 'it-alias-v37-audio-unlock';
-
+ 
 const urlsToCache = [
   './',
   './index.html',
