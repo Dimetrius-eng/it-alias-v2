@@ -1,5 +1,5 @@
-// ВЕРСІЯ 36 - Відкат до v30 + Останнє слово (Без анімацій)
-const CACHE_NAME = 'it-alias-v36-stable-last-word';
+// ВЕРСІЯ 37 - Виправлення багу "Продовжити" + "Розблокування" аудіо
+const CACHE_NAME = 'it-alias-v37-audio-unlock';
 
 const urlsToCache = [
   './',
@@ -22,7 +22,7 @@ self.addEventListener('install', event => {
   event.waitUntil(
     caches.open(CACHE_NAME)
       .then(cache => {
-        console.log('Відкрито кеш v36');
+        console.log('Відкрито кеш v37');
         const localUrls = urlsToCache.filter(url => !url.startsWith('http'));
         const externalUrls = urlsToCache.filter(url => url.startsWith('http'));
         
@@ -32,7 +32,7 @@ self.addEventListener('install', event => {
             return Promise.all(externalRequests.map(req => cache.add(req)));
           });
       })
-      .catch(err => console.error('Помилка cache.addAll у v36:', err))
+      .catch(err => console.error('Помилка cache.addAll у v37:', err))
   );
 });
 
@@ -61,7 +61,7 @@ self.addEventListener('activate', event => {
       );
     })
     .then(() => {
-        console.log('Service Worker v36 активовано і перехоплює контроль!');
+        console.log('Service Worker v37 активовано і перехоплює контроль!');
         return self.clients.claim();
     })
   );
