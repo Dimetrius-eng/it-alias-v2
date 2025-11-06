@@ -84,17 +84,12 @@ newGameMenuBtn.addEventListener('click', () => {
   }
 });
 rulesBtn.addEventListener('click', () => showScreen(rulesScreen));
-
-// ЗМІНА ТУТ: "Розблокування" аудіо
 startBtn.addEventListener('click', () => {
-    // Примусово "розбудити" і завантажити всі звуки
     if (isSoundEnabled) {
         Object.values(sounds).forEach(sound => sound.load());
     }
-    // Запускаємо гру
     setupNewGame();
 });
-
 continueBtn.addEventListener('click', continueGame); 
 correctBtn.addEventListener('click', handleCorrect);
 skipBtn.addEventListener('click', handleSkip);
@@ -216,7 +211,6 @@ async function initializeApp() {
   
   pauseBtn.style.display = 'none'; 
   
-  // (Код v30 - без анімацій)
   showScreen(mainMenuScreen); 
   scoreboard.style.display = 'none';
 }
@@ -226,7 +220,6 @@ function showScreen(screenToShow) {
   screens.forEach(screen => screen.classList.remove('active'));
   screenToShow.classList.add('active');
   
-  // Керуємо ТІЛЬКИ кнопкою паузи
   if (screenToShow === gameScreen) {
     pauseBtn.style.display = 'block';
   } else {
@@ -269,7 +262,6 @@ function continueGame() {
   roundsOutput.value = gameState.totalRounds;
   categorySelect.value = gameState.selectedCategory; 
   
-  // ЗМІНА ТУТ: Примусово "розбудити" аудіо
   if (isSoundEnabled) {
       Object.values(sounds).forEach(sound => sound.load());
   }
@@ -364,34 +356,36 @@ function handleSkip() {
   nextWord();
 }
 
-// ЗМІНА ТУТ: Додаємо логіку "Останнього слова"
 function endRound() {
   clearInterval(timerInterval); 
   gameState.isRoundActive = false; 
   stopSound(sounds.tick); 
-  playSound(sounds.timesUp); 
+  // ЗВУК "TIMESUP" ПЕРЕНЕСЕНО
   
-  // Копіюємо слово на новий екран
   lastWordDisplay.innerHTML = wordDisplay.innerHTML;
   lastWordDisplay.style.fontSize = wordDisplay.style.fontSize;
   
-  // Показуємо новий екран
   showScreen(lastWordScreen);
 }
 
-// НОВА ФУНКЦІЯ
+// ЗМІНА ТУТ: Додано звук
 function handleLastWordCorrect() {
   roundScore++; 
+  playSound(sounds.correct); 
   finishRoundLogic(); 
 }
 
-// НОВА ФУНКЦІЯ
+// ЗМІНА ТУТ: Додано звук
 function handleLastWordSkip() {
+  playSound(sounds.skip); 
   finishRoundLogic(); 
 }
 
-// НОВА ФУНКЦІЯ (містить логіку зі старої endRound)
 function finishRoundLogic() {
+  // ЗМІНА ТУТ: Звук "TimesUp" тепер лунає, 
+  // коли ми *дійсно* закінчуємо раунд
+  playSound(sounds.timesUp); 
+
   if (gameState.currentTeam === 1) gameState.team1Score += roundScore;
   else gameState.team2Score += roundScore;
   gameState.lastRoundScore = roundScore; 
@@ -407,7 +401,6 @@ function finishRoundLogic() {
     saveGameState(); 
   }
 }
-
 
 function showRoundSummary(isContinuation = false) {
   if (isContinuation) {
@@ -466,7 +459,6 @@ function resumeGame() {
   startTimer(); 
 }
 
-// ЗМІНА ТУТ: Виправлення багу v36
 function quitGame() {
   if (!confirm("Вийти в головне меню? Ваш прогрес буде збережено.")) {
       return; 
@@ -480,10 +472,8 @@ function quitGame() {
   
   scoreboard.style.display = 'none'; 
   
-  // НЕ викликаємо initializeApp()
   showScreen(mainMenuScreen);
   
-  // Оновлюємо кнопку "Продовжити" вручну
   if (loadGameState() && gameState.isGameInProgress) {
     continueBtn.style.display = 'block';
     continueBtn.disabled = false;
